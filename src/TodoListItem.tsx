@@ -1,7 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-import * as styles from "./TodoListItem.css";
-import * as classname from "classnames";
+import * as styles from './TodoListItem.css';
+import * as classname from 'classnames';
 
 export interface TodoListItemProps {
   id: string;
@@ -22,7 +22,7 @@ export default class TodoListItem extends React.Component<
   constructor(props: TodoListItemProps) {
     super(props);
     this.state = {
-      isEditing: false
+      isEditing: false,
     };
   }
 
@@ -33,7 +33,7 @@ export default class TodoListItem extends React.Component<
   onClick = (event: any): void => {
     event.preventDefault();
     this.setState({
-      isEditing: true
+      isEditing: true,
     });
   };
 
@@ -42,7 +42,7 @@ export default class TodoListItem extends React.Component<
       // todo submit
       this.props.onUpdate({
         id: this.props.id,
-        title: event.target.value
+        title: event.target.value,
       });
       this.setState({ isEditing: false });
     }
@@ -58,7 +58,7 @@ export default class TodoListItem extends React.Component<
   };
 
   onRemove = (event: any): void => {
-    const confirm = window.confirm("Are you sure?");
+    const confirm = window.confirm('Are you sure?');
 
     if (confirm) {
       this.props.onRemove(this.props.id);
@@ -68,7 +68,7 @@ export default class TodoListItem extends React.Component<
   onClickCheckbox = (event: any): void => {
     this.props.onUpdate({
       id: event.target.id,
-      done: event.target.checked
+      done: event.target.checked,
     });
   };
 
@@ -77,35 +77,42 @@ export default class TodoListItem extends React.Component<
 
     return (
       <div className={styles.item}>
-        {this.state.isEditing ? (
-          <input
-            autoFocus
-            type="text"
-            defaultValue={title}
-            onKeyUp={this.onKeyUp}
-            onBlur={this.onBlur}
-          />
-        ) : (
-          <a
-            href="#"
-            onClick={this.onClick}
-            className={classname(styles.itemTitle, {
-              [styles.itemDone]: done
-            })}
-          >
-            {title}
-          </a>
-        )}
+        <div className={styles.itemInner}>
+          {!this.state.isEditing && (
+            <input
+              id={id}
+              type="checkbox"
+              defaultChecked={done}
+              onClick={this.onClickCheckbox}
+            />
+          )}
+          {this.state.isEditing ? (
+            <input
+              autoFocus
+              type="text"
+              defaultValue={title}
+              onKeyUp={this.onKeyUp}
+              onBlur={this.onBlur}
+              className={styles.itemInput}
+            />
+          ) : (
+            <a
+              href="#"
+              onClick={this.onClick}
+              className={classname(styles.itemTitle, {
+                [styles.itemDone]: done,
+              })}
+            >
+              {title}
+            </a>
+          )}
+        </div>
 
         {!this.state.isEditing && (
-          <input
-            id={id}
-            type="checkbox"
-            defaultChecked={done}
-            onClick={this.onClickCheckbox}
-          />
+          <button className={styles.removeButton} onClick={this.onRemove}>
+            Remove
+          </button>
         )}
-        <button onClick={this.onRemove}>Remove</button>
       </div>
     );
   }

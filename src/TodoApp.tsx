@@ -1,10 +1,10 @@
-import * as React from "react";
-import { v4 } from "uuid";
+import * as React from 'react';
+import { v4 } from 'uuid';
 
-import * as styles from "./TodoApp.css";
+import * as styles from './TodoApp.css';
 
-import TodoForm from "./TodoForm";
-import TodoListItem from "./TodoListItem";
+import TodoForm from './TodoForm';
+import TodoListItem from './TodoListItem';
 
 export interface TodoItem {
   id: string;
@@ -22,7 +22,7 @@ export interface TodoState {
 
 export default class Todo extends React.Component<TodoProps, TodoState> {
   static defaultProps = {
-    name: "Dave"
+    name: 'Dave',
   };
 
   constructor(props: TodoProps) {
@@ -37,8 +37,8 @@ export default class Todo extends React.Component<TodoProps, TodoState> {
 
   private getItems(): TodoItem[] {
     try {
-      const data: any = localStorage.getItem("todos"); // string
-      return JSON.parse(data);
+      const data: any = localStorage.getItem('todos'); // string
+      return JSON.parse(data) || [];
     } catch (err) {
       return [];
     }
@@ -46,7 +46,7 @@ export default class Todo extends React.Component<TodoProps, TodoState> {
 
   componentDidUpdate(prevProps: any, prevState: any) {
     if (prevState.items !== this.state.items) {
-      localStorage.setItem("todos", JSON.stringify(this.state.items));
+      localStorage.setItem('todos', JSON.stringify(this.state.items));
     }
   }
 
@@ -54,12 +54,12 @@ export default class Todo extends React.Component<TodoProps, TodoState> {
     const item: TodoItem = {
       id: v4(),
       title: value,
-      done: false
+      done: false,
     };
 
     this.setState(
       {
-        items: this.state.items.concat([item])
+        items: this.state.items.concat([item]),
       },
       () => {
         console.log(this.state.items);
@@ -75,13 +75,13 @@ export default class Todo extends React.Component<TodoProps, TodoState> {
         } else {
           return prev;
         }
-      })
+      }),
     });
   }
 
   private onRemove(id: string): void {
     this.setState({
-      items: this.state.items.filter(i => i.id !== id)
+      items: this.state.items.filter(i => i.id !== id),
     });
   }
 
@@ -104,7 +104,6 @@ export default class Todo extends React.Component<TodoProps, TodoState> {
         <div className={styles.todoAppHeader}>
           <h2>Todo App</h2>
           <TodoForm onSubmit={this.onSubmit} />
-          <hr />
         </div>
         {this.state.items.map(this.renderItem)}
       </div>

@@ -15,3 +15,22 @@
 .itemDone {
   text-decoration: line-through;
 }
+
+.itemInput {
+  width: 100%;
+}
+
+.itemInner {
+  display: flex;
+  flex: 1;
+}
+
+.itemInner > input[type='checkbox'] {
+  margin-right: 10px;
+}
+
+.removeButton {
+  color: white;
+  background-color: blue;
+  border: none;
+}
