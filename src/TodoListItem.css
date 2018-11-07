@@ -1,0 +1,17 @@
+.item {
+  display: flex;
+  border: solid 1px gray;
+  padding: 1rem;
+  flex-direction: row;
+  margin-bottom: 1rem;
+}
+
+.itemTitle {
+  text-decoration: none;
+  flex: 1;
+  color: black;
+}
+
+.itemDone {
+  text-decoration: line-through;
+}
